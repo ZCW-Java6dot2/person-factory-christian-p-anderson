@@ -37,18 +37,25 @@ public final class PersonFactory {
      *
      * @param listSize - number of Person objects to create
      * @return - ArrayList of Person objects
+     *
+     * .collect() accumulates elements of the stream (Person objects) into a Collection
+     * Collectors.toList() is a static (class) method that returns a Collector Interface that gathers the input data onto a new list
      */ // TODO
     public List<Person> createPersonList(int listSize) {
-        return null;
+        return createPersonStream(listSize).collect(Collectors.toList());
     }
 
 
     /**
      * @param arrayLength - number of Person objects to create
      * @return - Array of Person objects
+     *
+     * create an array of type Person and pass in the user input of arrayLength
+     * execute the method createPersonList based on the people array of type Person
      */ // TODO
     public Person[] createPersonArray(int arrayLength) {
-        return null;
+        Person[] people = new Person[arrayLength];
+        return createPersonList(arrayLength).toArray(people);
     }
 
 
@@ -59,6 +66,6 @@ public final class PersonFactory {
      * @return - Stream representation of collection of Person objects
      */ // TODO
     public Stream<Person> createPersonStream(int streamCount) {
-        return null;
+        return Stream.generate(()-> createRandomPerson()).limit(streamCount);
     }
 }

@@ -4,10 +4,7 @@ import com.zipcodewilmington.streams.tools.ReflectionUtils;
 import com.zipcodewilmington.streams.tools.logging.LoggerHandler;
 import com.zipcodewilmington.streams.tools.logging.LoggerWarehouse;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,39 +33,62 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return list of names of Person objects
      */ // TODO
     public List<String> getNames() {
-        return null;
+        return people.stream()
+                .map(person -> person.getName())
+                .collect(Collectors.toList());
     }
 
 
     /**
      * @return list of uniquely named Person objects
+     *
+     * Create a HashSet
+     * Create a stream from people and use the filter() method to add each person in the HashSet based on their name.
+     * Because you use HashSet it will only have unique names of each person
+     *
      */ //TODO
     public Stream<Person> getUniquelyNamedPeople() {
-        return null;
+        Set<String> setOfUniqueNames = new HashSet<>();
+        return people.stream()
+                .filter(person -> setOfUniqueNames.add(person.getName()));
     }
-
 
     /**
      * @param character starting character of Person objects' name
      * @return a Stream of respective
+     *
+     * Follow same patch as getUniquelyNamedPeople() method.
+     * Filter out the each person based on the character the user inputs.
+     * Filter the stream again ad add the people to the HashSet.
+     * Because you use a Hashset it onl will have unique names.
+     *
      */ //TODO
     public Stream<Person> getUniquelyNamedPeopleStartingWith(Character character) {
-        return null;
+        Set<String> setOfUniqueNames = new HashSet<>();
+        return people.stream()
+                .filter(person -> person.getName().charAt(0) == character)
+                .filter(person -> setOfUniqueNames.add(person.getName()));
     }
 
     /**
      * @param n first `n` Person objects
      * @return a Stream of respective
+     *
+     * Apply a limit of n on the getUniquelyNamedPeople() method
+     *
      */ //TODO
     public Stream<Person> getFirstNUniquelyNamedPeople(int n) {
-        return null;
+        return this.people.stream().limit(n);
     }
 
     /**
      * @return a mapping of Person Id to the respective Person name
      */ // TODO
     public Map<Long, String> getIdToNameMap() {
-        return null;
+        return this.people.stream()
+                .collect(Collectors.toMap(
+                        (person -> person.getPersonalId()),
+                        (person -> person.getName())));
     }
 
 
@@ -84,7 +104,8 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return Stream of all Aliases
      */ // TODO
     public Stream<String> getAllAliases() {
-        return null;
+        return this.people.stream()
+                .map(person -> person.getAliases().toString());
     }
 
     // DO NOT MODIFY
