@@ -96,7 +96,9 @@ public final class PersonWarehouse implements Iterable<Person> {
      * @return Stream of Stream of Aliases
      */ // TODO
     public Stream<Stream<String>> getNestedAliases() {
-        return null;
+//        return Stream.generate(people -> people.getAllAliases());
+        return this.people.stream()
+                .map(person -> Stream.of(person.getAliases()));
     }
 
 
